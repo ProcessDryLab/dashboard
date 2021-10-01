@@ -40,7 +40,11 @@
           </div>
         </nav>
         <main role='main' class='col-md-9 ml-sm-auto col-lg-10 pl-md-4 pt-3 pr-0'>
-          <router-view :processes='processes' @newConstraint='newConstraint' />
+          <router-view
+            :processes='processes'
+            :refreshProcess='refreshProcess'
+            @newConstraint='newConstraint'
+            @processRereshed='processRereshed' />
         </main>
       </b-row>
     </b-container>
@@ -66,7 +70,8 @@ export default {
   data () {
     return {
       processes: [],
-      systemStatus: 'booting'
+      systemStatus: 'booting',
+      refreshProcess: false
     }
   },
   methods: {
@@ -92,9 +97,15 @@ export default {
         var idx = this.processes.indexOf(matches[0])
         axios
           .post(this.$backend.getUrlEditModel(source, relationship, target), this.processes[idx].json)
-          .then((res) => (this.processes[idx].json = res.data))
+          .then((res) => {
+            this.processes[idx].json = res.data
+            this.refreshProcess = true
+          })
           .catch((err) => console.error(err))
       }
+    },
+    processRereshed() {
+      this.refreshProcess = false
     }
   },
   mounted () {

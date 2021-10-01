@@ -34,7 +34,7 @@ import axios from 'axios'
 
 export default {
   name: 'ProcessView',
-  props: ['processes'],
+  props: ['processes', 'refreshProcess'],
   data () {
     return {
       process: {
@@ -42,8 +42,7 @@ export default {
         name: '',
         json: ''
       },
-      dot: null,
-      toRefresh: false
+      dot: null
     }
   },
   components: {
@@ -56,7 +55,11 @@ export default {
   },
   watch: {
     $route: 'fetchData',
-    toRefresh: 'renderProcess'
+    refreshProcess() {
+      if (this.refreshProcess) {
+        this.renderProcess()
+      }
+    }
   },
   methods: {
     fetchData () {
@@ -72,10 +75,13 @@ export default {
     },
     renderProcess () {
       this.dot = null
-      this.toRefresh = false
+      // this.toRefresh = false
       axios
         .post(this.$backend.getUrlDcr2Dot(), this.process.json)
-        .then((res) => (this.dot = res.data))
+        .then((res) => {
+          this.dot = res.data
+          this.$emit('processRereshed')
+        })
         .catch((err) => console.error(err))
     },
     exportJson() {
@@ -87,7 +93,7 @@ export default {
     },
     newConstraint(source, relationship, target) {
       this.$emit('newConstraint', this.process.id, source, relationship, target)
-      setTimeout(() => { this.toRefresh = true }, 2000);
+      //setTimeout(() => { this.toRefresh = true }, 2000);
     }
   }
 }
