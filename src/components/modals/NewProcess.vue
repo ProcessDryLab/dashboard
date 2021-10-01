@@ -33,7 +33,7 @@ export default {
     }
   },
   methods: {
-    handleOk (bvModalEvt) {
+    handleOk() {
       this.$emit('newProcessFromJson', this.processName, this.processJson)
     }
   }
