@@ -1,6 +1,6 @@
 [
   {
-    "protocol": "https",
-    "hostname": "dcr-engine-eu1.herokuapp.com"
+    "protocol": "http",
+    "hostname": "localhost:8080"
   }
 ]

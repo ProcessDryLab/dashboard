@@ -34,6 +34,14 @@ export default class PlgBackend {
     return this.getUrl() + '/api/v1/dcr/dcr2graphviz'
   }
 
+  getUrlImportFromDcrJson() {
+    return this.getUrl() + '/api/v1/dcr/importFromDcrJson'
+  }
+
+  getUrlExportToDcrJson() {
+    return this.getUrl() + '/api/v1/dcr/exportToDcrJson'
+  }
+
   getUrlInitializeSimulation() {
     return this.getUrl() + '/api/v1/dcr/simulation/initialize'
   }

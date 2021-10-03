@@ -8,12 +8,23 @@
       <font-awesome-icon icon="file" />
       Process {{ proc.name }}
     </b-list-group-item>
+    <!-- <UploadFile @uploadedFile='uploadedFile' /> -->
   </div>
 </template>
 
 <script>
+// import UploadFile from './UploadFile.vue'
+
 export default {
   name: 'ProcessesList',
-  props: ['processes']
+  props: ['processes'],
+  components: {
+    // UploadFile
+  },
+  methods: {
+    uploadedFile(file) {
+      this.$emit('newProcessJson', file)
+    }
+  }
 }
 </script>

@@ -8,7 +8,7 @@
           v-b-modal.new-constraint size="sm">
           Add constraint</b-button>
         <b-dropdown right text="Export" variant="outline-secondary" size="sm">
-            <b-dropdown-item @click="exportJson">Export .json</b-dropdown-item>
+            <!-- <b-dropdown-item @click="exportJson">Export to DCR .json</b-dropdown-item> -->
         </b-dropdown>
       </b-button-group>
     </div>
@@ -85,11 +85,16 @@ export default {
         .catch((err) => console.error(err))
     },
     exportJson() {
-        var url = window.URL.createObjectURL(new Blob([JSON.stringify(this.process.json)], { type: 'application/json' }));
-        var fileLink = document.createElement('a');
-        fileLink.href = url;
-        fileLink.download = 'Process-' + this.process.name + ".json";
-        fileLink.click();
+      axios
+        .post(this.$backend.getUrlExportToDcrJson(), this.process.json)
+        .then((res) => {
+          var url = window.URL.createObjectURL(new Blob([JSON.stringify(res.data)], { type: 'application/json' }));
+          var fileLink = document.createElement('a');
+          fileLink.href = url;
+          fileLink.download = 'Process-' + this.process.name + ".json";
+          fileLink.click();
+        })
+        .catch((err) => console.error(err))
     },
     newConstraint(source, relationship, target) {
       this.$emit('newConstraint', this.process.id, source, relationship, target)

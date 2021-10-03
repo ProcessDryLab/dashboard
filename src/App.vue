@@ -44,7 +44,8 @@
             :processes='processes'
             :refreshProcess='refreshProcess'
             @newConstraint='newConstraint'
-            @processRereshed='processRereshed' />
+            @processRereshed='processRereshed'
+            @newProcessJson='newProcessJson' />
         </main>
       </b-row>
     </b-container>
@@ -81,15 +82,24 @@ export default {
         .then((res) => (this.systemStatus = res.data === 'pong' ? 'online' : 'offline'))
         .catch((err) => console.error(err))
     },
-    newProcessFromJson(processName, processJson) {
+    addProcess(processName, processJson) {
       this.processes = [...this.processes, { id: uuidv4(), name: processName, json: JSON.parse(processJson) }]
       this.$toastr.s('New process created!')
     },
+    newProcessFromJson(processName, processJson) {
+      axios
+        .post(this.$backend.getUrlImportFromDcrJson(), JSON.parse(processJson))
+        .then((res) => 
+          this.addProcess(processName, JSON.stringify(res.data))
+          // console.log(res)
+        )
+        .catch((err) => console.error(err))
+    },
     newProcessEmpty(processName) {
-      this.newProcessFromJson(processName, '{"activities":[],"executedActivities":[],"relations":[],"included":[],"pending":[]}')
+      this.addProcess(processName, '{"activities":[],"executedActivities":[],"relations":[],"included":[],"pending":[]}')
     },
     loadDemo() {
-      this.newProcessFromJson("Demo", '{"activities":[{"name":"Payout"},{"name":"Create"},{"name":"Approve"},{"name":"Reject"}],"executedActivities":[],"relations":[{"source":{"name":"Approve"},"target":{"name":"Payout"},"relation":"INCLUDE"},{"source":{"name":"Create"},"target":{"name":"Reject"},"relation":"CONDITION"},{"source":{"name":"Approve"},"target":{"name":"Payout"},"relation":"CONDITION"},{"source":{"name":"Create"},"target":{"name":"Approve"},"relation":"CONDITION"},{"source":{"name":"Create"},"target":{"name":"Payout"},"relation":"RESPONSE"},{"source":{"name":"Reject"},"target":{"name":"Payout"},"relation":"EXCLUDE"},{"source":{"name":"Reject"},"target":{"name":"Approve"},"relation":"EXCLUDE"},{"source":{"name":"Approve"},"target":{"name":"Reject"},"relation":"EXCLUDE"},{"source":{"name":"Approve"},"target":{"name":"Approve"},"relation":"EXCLUDE"},{"source":{"name":"Create"},"target":{"name":"Create"},"relation":"EXCLUDE"}],"included":[{"name":"Payout"},{"name":"Create"},{"name":"Approve"},{"name":"Reject"}],"pending":[{"name":"Create"}]}')
+      this.addProcess("Demo", '{"activities":[{"name":"Payout"},{"name":"Create"},{"name":"Approve"},{"name":"Reject"}],"executedActivities":[],"relations":[{"source":{"name":"Approve"},"target":{"name":"Payout"},"relation":"INCLUDE"},{"source":{"name":"Create"},"target":{"name":"Reject"},"relation":"CONDITION"},{"source":{"name":"Approve"},"target":{"name":"Payout"},"relation":"CONDITION"},{"source":{"name":"Create"},"target":{"name":"Approve"},"relation":"CONDITION"},{"source":{"name":"Create"},"target":{"name":"Payout"},"relation":"RESPONSE"},{"source":{"name":"Reject"},"target":{"name":"Payout"},"relation":"EXCLUDE"},{"source":{"name":"Reject"},"target":{"name":"Approve"},"relation":"EXCLUDE"},{"source":{"name":"Approve"},"target":{"name":"Reject"},"relation":"EXCLUDE"},{"source":{"name":"Approve"},"target":{"name":"Approve"},"relation":"EXCLUDE"},{"source":{"name":"Create"},"target":{"name":"Create"},"relation":"EXCLUDE"}],"included":[{"name":"Payout"},{"name":"Create"},{"name":"Approve"},{"name":"Reject"}],"pending":[{"name":"Create"}]}')
     },
     newConstraint(id, source, relationship, target) {
       const matches = this.processes.filter((p) => p.id === id)
@@ -103,6 +113,9 @@ export default {
           })
           .catch((err) => console.error(err))
       }
+    },
+    newProcessJson(file) {
+      this.addProcess('aaa', file)
     },
     processRereshed() {
       this.refreshProcess = false
