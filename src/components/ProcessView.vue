@@ -8,7 +8,7 @@
           v-b-modal.new-constraint size="sm">
           Add constraint</b-button>
         <b-dropdown right text="Export" variant="outline-secondary" size="sm">
-            <!-- <b-dropdown-item @click="exportJson">Export to DCR .json</b-dropdown-item> -->
+            <b-dropdown-item @click="exportJson">Export to DCR .json</b-dropdown-item>
         </b-dropdown>
       </b-button-group>
     </div>
