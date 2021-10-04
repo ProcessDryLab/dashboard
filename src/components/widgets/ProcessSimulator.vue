@@ -3,7 +3,10 @@
     <h6>Simulator</h6>
     <p>Accepting status: {{ this.status.isAccepting }}</p>
     <b-card no-body header="Enabled activities">
-      <b-list-group flush>
+      <b-card-body v-if="status.enabledActivities.length == 0">
+        <b-card-text><em>No enabled activities</em></b-card-text>
+      </b-card-body>
+      <b-list-group flush v-else>
         <b-list-group-item
           v-bind:key="a.name"
           v-for="a in status.enabledActivities"
