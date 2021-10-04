@@ -1,6 +1,6 @@
 <template>
   <div id='app'>
-    <b-navbar toggleable='lg' type='dark' variant='dark' class='shadow'>
+    <b-navbar toggleable='lg' type='dark' variant='dark' class='shadow' style="background-color: #900 !important">
       <b-navbar-brand href='#'>
         <img src='@/assets/dtu.png' class='d-inline-block align-top' alt='DTU' height='30' />
         DCR Engine
@@ -32,7 +32,9 @@
               :class="this.processes.length > 0 ? 'd-flex' : 'd-none'">
               Processes
             </h6>
-            <ProcessesList v-bind:processes='processes' />
+            <ProcessesList
+              v-bind:processes='processes'
+              @newProcessJson='newProcessFromJson' />
             <SystemStatus v-bind:systemStatus='systemStatus' />
             
             <NewProcess @newProcessFromJson="newProcessFromJson" />
@@ -44,8 +46,7 @@
             :processes='processes'
             :refreshProcess='refreshProcess'
             @newConstraint='newConstraint'
-            @processRereshed='processRereshed'
-            @newProcessJson='newProcessJson' />
+            @processRereshed='processRereshed' />
         </main>
       </b-row>
     </b-container>
@@ -113,9 +114,6 @@ export default {
           })
           .catch((err) => console.error(err))
       }
-    },
-    newProcessJson(file) {
-      this.addProcess('aaa', file)
     },
     processRereshed() {
       this.refreshProcess = false

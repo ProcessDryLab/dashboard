@@ -75,7 +75,6 @@ export default {
     },
     renderProcess () {
       this.dot = null
-      // this.toRefresh = false
       axios
         .post(this.$backend.getUrlDcr2Dot(), this.process.json)
         .then((res) => {
@@ -98,7 +97,6 @@ export default {
     },
     newConstraint(source, relationship, target) {
       this.$emit('newConstraint', this.process.id, source, relationship, target)
-      //setTimeout(() => { this.toRefresh = true }, 2000);
     }
   }
 }

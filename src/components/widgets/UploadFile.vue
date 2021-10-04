@@ -23,31 +23,15 @@ export default {
           autoProcessQueue: false,
           url: 'https://localhost',
           previewsContainer: false,
-          dictDefaultMessage: "Drop here a <code>.json</code> file"
-      }
+          dictDefaultMessage: "Drop here a DCR <code>.json</code> file"
+      },
     }
   },
   methods: {
-    trigger() {
-      this.$emit('aaaaa')
-      console.log('b')
-    },
     sendingFile(file) {
-      this.$emit('aaaaa')
-      // var vm = this
-      let reader = new FileReader();
-      reader.readAsText(file, "UTF-8");
-      reader.onload =  evt => {
-        var text = evt.target.result;
-        // vm.$emit('aaaaaaaa', text)
-        // this.$emit('update:title')
-        this.trigger()
-        console.log(text)
-        console.log('-----------')
-      }
-      reader.onerror = evt => {
-        console.error(evt);
-      }
+      const reader = new FileReader()
+      reader.onload = e => this.$emit('uploadedFile', file.name, e.target.result)
+      reader.readAsText(file, "UTF-8")
     }
   }
 }
@@ -56,9 +40,13 @@ export default {
 <style>
 #dropzone {
   margin: 10px;
+  position: absolute;
+  bottom: 70px;
+  width: 93%;
   border: 3px dashed #CCC;
   border-radius: 10px;
   min-height: 0;
+  opacity: .5;
 }
   .dropzone .dz-message {
     margin: 0 !important;
