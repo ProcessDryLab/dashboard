@@ -97,7 +97,7 @@ export default {
         .catch((err) => console.error(err))
     },
     newProcessEmpty(processName) {
-      this.addProcess(processName, '{"activities":[],"executedActivities":[],"relations":[],"included":[],"pending":[]}')
+      this.addProcess(processName, '{"activities":[],"relations":[]}')
     },
     loadDemo() {
       this.newProcessFromJson("Demo", '{"DCRModel":[{"description":"","type":"DCRModel","roles":[],"events":[{"id":"35f2811d-75f6-41bc-8c4c-cedae6afd4a2","label":"Create"},{"id":"229f74ee-8ec1-4b95-8a26-7cbaed060a08","label":"Approve"},{"id":"070adbfc-dd39-4db2-a5ee-b599c70d5e80","label":"Payout"},{"id":"18cb3d0f-9fd4-47d8-b86f-f1654eaed760","label":"Reject"}],"rules":[{"type":"exclude","source":"35f2811d-75f6-41bc-8c4c-cedae6afd4a2","target":"35f2811d-75f6-41bc-8c4c-cedae6afd4a2","description":""},{"type":"include","source":"229f74ee-8ec1-4b95-8a26-7cbaed060a08","target":"070adbfc-dd39-4db2-a5ee-b599c70d5e80","description":""},{"type":"condition","source":"35f2811d-75f6-41bc-8c4c-cedae6afd4a2","target":"229f74ee-8ec1-4b95-8a26-7cbaed060a08","description":""},{"type":"condition","source":"35f2811d-75f6-41bc-8c4c-cedae6afd4a2","target":"18cb3d0f-9fd4-47d8-b86f-f1654eaed760","description":""},{"type":"condition","source":"229f74ee-8ec1-4b95-8a26-7cbaed060a08","target":"070adbfc-dd39-4db2-a5ee-b599c70d5e80","description":""},{"type":"response","source":"35f2811d-75f6-41bc-8c4c-cedae6afd4a2","target":"070adbfc-dd39-4db2-a5ee-b599c70d5e80","description":""},{"type":"exclude","source":"18cb3d0f-9fd4-47d8-b86f-f1654eaed760","target":"070adbfc-dd39-4db2-a5ee-b599c70d5e80","description":""}]}]}')
