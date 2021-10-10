@@ -8,11 +8,11 @@
       </b-card-body>
       <b-list-group flush v-else>
         <b-list-group-item
-          v-bind:key="a.name"
+          v-bind:key="a"
           v-for="a in status.enabledActivities"
           button
-          @click="execute(a.name)">
-          {{ a.name }}
+          @click="execute(a)">
+          {{ activityIdToName(a) }}
         </b-list-group-item>
       </b-list-group>
     </b-card>
@@ -22,7 +22,7 @@
           v-bind:key="a.id"
           v-for="a in simulationHistory">
           <small>{{ a.id + 1 }}.</small>
-          {{ a.name }}
+          {{ activityIdToName(a.name) }}
         </b-list-group-item>
         <b-list-group-item button variant="danger" @click="reset()">Reset simulation</b-list-group-item>
       </b-list-group>
@@ -81,6 +81,10 @@ export default {
         .get(this.$backend.getUrlSimulationReset(this.simluationId))
         .then(() => { this.initiateSimulation(); this.simulationHistory = [] ; this.$toastr.s('Simulation reset')})
         .catch((err) => console.error(err))
+    },
+    activityIdToName(id) {
+      var res = this.json.activities.filter(a => a.id === id)
+      return res[0].name
     }
   }
 }
