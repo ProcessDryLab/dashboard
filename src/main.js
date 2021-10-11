@@ -13,6 +13,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import VueToastr from 'vue-toastr'
 
 import DCRServices from './services/DCRServices.js'
+import DCRMinerServices from './services/DCRMinerServices.js'
 
 // bootstrap
 Vue.use(BootstrapVue)
@@ -32,6 +33,7 @@ Vue.use(VueToastr, {
 
 // backend service
 Vue.prototype.$backend = new DCRServices()
+Vue.prototype.$backendMiner = new DCRMinerServices()
 
 Vue.config.productionTip = false
 

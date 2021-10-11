@@ -26,6 +26,8 @@
                   :disabled="this.systemStatus != 'online'">Demo</b-dropdown-item>
                 <b-dropdown-item variant='outline-secondary' v-b-modal.new-process
                   :disabled="this.systemStatus != 'online'">Import from JSON</b-dropdown-item>
+                <b-dropdown-item variant='outline-secondary' v-b-modal.mine-log
+                  :disabled="this.systemStatus != 'online'">Mine from an XES with DisCoveR</b-dropdown-item>
               </b-dropdown>
             </b-button-group>            
             <h6 class="sidebar-heading justify-content-between align-items-center px-3 mt-4 mb-1 text-muted"
@@ -35,10 +37,11 @@
             <ProcessesList
               v-bind:processes='processes'
               @newProcessJson='newProcessFromJson' />
-            <SystemStatus v-bind:systemStatus='systemStatus' />
+            <SystemStatus v-bind:systemStatus='systemStatus' :systemStatusMiner='systemStatusMiner' />
             
             <NewProcess @newProcessFromJson="newProcessFromJson" />
             <NewProcessEmpty @newProcessEmpty="newProcessEmpty" />
+            <Mine @newProcessMined="newProcessMined" />
           </div>
         </nav>
         <main role='main' class='col-md-9 ml-sm-auto col-lg-10 pl-md-4 pt-3 pr-0'>
@@ -58,6 +61,7 @@ import ProcessesList from './components/widgets/ProcessesList.vue'
 import SystemStatus from './components/widgets/SystemStatus.vue'
 import NewProcess from './components/modals/NewProcess.vue'
 import NewProcessEmpty from './components/modals/NewProcessEmpty.vue'
+import Mine from './components/modals/Mine.vue'
 
 import axios from 'axios'
 import { v4 as uuidv4 } from 'uuid'
@@ -67,12 +71,14 @@ export default {
     ProcessesList,
     SystemStatus,
     NewProcess,
-    NewProcessEmpty
+    NewProcessEmpty,
+    Mine
   },
   data () {
     return {
       processes: [],
       systemStatus: 'booting',
+      systemStatusMiner: 'booting',
       refreshProcess: false
     }
   },
@@ -81,7 +87,11 @@ export default {
       axios
         .get(this.$backend.getUrlPing())
         .then((res) => (this.systemStatus = res.data === 'pong' ? 'online' : 'offline'))
-        .catch((err) => console.error(err))
+        .catch((err) => { console.error(err) ; this.systemStatus = 'offline' })
+      axios
+        .get(this.$backendMiner.getUrlPing())
+        .then((res) => (this.systemStatusMiner = res.data === 'pong' ? 'online' : 'offline'))
+        .catch((err) => { console.error(err) ; this.systemStatusMiner = 'offline' })
     },
     addProcess(processName, processJson) {
       this.processes = [...this.processes, { id: uuidv4(), name: processName, json: JSON.parse(processJson) }]
@@ -95,6 +105,9 @@ export default {
           // console.log(res)
         )
         .catch((err) => console.error(err))
+    },
+    newProcessMined(processName, processJson) {
+      this.addProcess(processName, JSON.stringify(processJson))
     },
     newProcessEmpty(processName) {
       this.addProcess(processName, '{"activities":[],"relations":[]}')

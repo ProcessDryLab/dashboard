@@ -1,6 +1,10 @@
-[
-  {
+{
+  "engine": {
     "protocol": "https",
     "hostname": "dcr-engine-eu1.herokuapp.com"
+  },
+  "miner":{
+    "protocol": "https",
+    "hostname": "dcr-miner-eu1.herokuapp.com"
   }
-]
+}

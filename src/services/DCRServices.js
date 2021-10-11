@@ -1,4 +1,4 @@
-export default class PlgBackend {
+export default class DCRServices {
   constructor() {
     this.urls = require('../assets/backend-hosts.json')
     this.url = ''
@@ -7,7 +7,7 @@ export default class PlgBackend {
 
   getRandomURL() {
     var urls = this.getAllURLs()
-    this.url = urls[Math.floor(Math.random() * urls.length)]
+    this.url = urls.engine
   }
 
   getAllURLs() {
