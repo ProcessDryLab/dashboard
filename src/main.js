@@ -42,4 +42,4 @@ new Vue({
   render: h => h(App)
 }).$mount('#app')
 
-document.title = 'DCR Engine'
+document.title = 'ProcessDryLab'

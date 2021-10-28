@@ -3,7 +3,7 @@
     <b-navbar toggleable='lg' type='dark' variant='dark' class='shadow' style="background-color: #900 !important">
       <b-navbar-brand href='#'>
         <img src='@/assets/dtu.png' class='d-inline-block align-top' alt='DTU' height='30' />
-        DCR Engine
+        PDL - ProcessDryLab
       </b-navbar-brand>
       <b-navbar-toggle target='nav-collapse'></b-navbar-toggle>
       <b-collapse id='nav-collapse' is-nav>
