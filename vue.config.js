@@ -1,3 +1,3 @@
 module.exports = {
-  publicPath: '/dcr-engine-frontend/'
+  publicPath: '/dashboard/'
 };
