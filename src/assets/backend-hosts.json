@@ -1,7 +1,7 @@
 {
   "engine": {
     "protocol": "https",
-    "hostname": "dcr-engine-eu1.herokuapp.com"
+    "hostname": "pdl-engine-eu1.herokuapp.com"
   },
   "miner":{
     "protocol": "https",
