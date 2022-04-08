@@ -1,7 +1,17 @@
 <template>
   <div>
     <h6>Simulator</h6>
-    <p>Accepting status: {{ this.status.isAccepting }}</p>
+    <p>
+      <span v-if="this.status.accepting"><font-awesome-icon icon="check" style="color: rgb(0, 204, 0);" /> Status: accepting</span>
+      <span v-else>
+          <font-awesome-icon icon="exclamation" style="color: rgb(170, 20, 20);" /> Activities missing:
+          <span
+            v-bind:key="a"
+            v-for="a in this.status.pendingActivities">
+            <b-badge variant="primary">{{ activityIdToName(a) }}</b-badge>&nbsp;
+          </span>
+      </span>
+    </p>
     <b-card no-body header="Enabled activities">
       <b-card-body v-if="status.enabledActivities.length == 0">
         <b-card-text><em>No enabled activities</em></b-card-text>

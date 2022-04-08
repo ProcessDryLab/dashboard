@@ -41,7 +41,7 @@ export default {
 #dropzone {
   margin: 10px;
   position: absolute;
-  bottom: 70px;
+  bottom: 100px;
   width: 93%;
   border: 3px dashed #CCC;
   border-radius: 10px;
