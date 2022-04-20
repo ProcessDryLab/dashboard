@@ -6,5 +6,9 @@
   "miner":{
     "protocol": "https",
     "hostname": "dcr-miner-eu1.herokuapp.com"
+  },
+  "palia":{
+    "protocol": "https",
+    "hostname": "palia-miner-eu1-herokuapp.com"
   }
 }
