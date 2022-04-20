@@ -23,7 +23,7 @@ export default {
           autoProcessQueue: false,
           url: 'https://localhost',
           previewsContainer: false,
-          dictDefaultMessage: "Drop here a DCR <code>.json</code> file"
+          dictDefaultMessage: "Drop a DCR <code>.json</code> file"
       },
     }
   },

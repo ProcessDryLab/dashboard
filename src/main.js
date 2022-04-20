@@ -14,6 +14,7 @@ import VueToastr from 'vue-toastr'
 
 import DCRServices from './services/DCRServices.js'
 import DCRMinerServices from './services/DCRMinerServices.js'
+import PaliaMinerService from './services/PaliaMinerService.js'
 
 // bootstrap
 Vue.use(BootstrapVue)
@@ -34,6 +35,7 @@ Vue.use(VueToastr, {
 // backend service
 Vue.prototype.$backend = new DCRServices()
 Vue.prototype.$backendMiner = new DCRMinerServices()
+Vue.prototype.$backendPalia = new PaliaMinerService()
 
 Vue.config.productionTip = false
 

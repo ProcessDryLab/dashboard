@@ -7,6 +7,8 @@
       :to="{ name: 'ProcessView', params: { id: proc.id } }">
       <font-awesome-icon icon="file" />
       {{ proc.name }}
+        <b-badge v-if="proc.type == 'dcr'">DCR</b-badge>
+        <b-badge v-if="proc.type == 'palia'">PALIA</b-badge>
     </b-list-group-item>
     <UploadFile @uploadedFile='uploadedFile' />
   </div>

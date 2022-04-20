@@ -1,7 +1,7 @@
 <template>
   <b-modal
-    id="mine-log"
-    title="Mine a log"
+    id="mine-log-palia"
+    title="Mine a log with Palia"
     @ok="handleOk"
   >
     <b-form-group>
@@ -30,7 +30,7 @@ export default {
       var formData = new FormData();
       formData.append("file", this.file);
       axios
-        .post(this.$backendMiner.getUrlMiner(), formData, { headers: { 'Content-Type': 'multipart/form-data' }})
+        .post(this.$backendPalia.getUrlMiner(), formData, { headers: { 'Content-Type': 'multipart/form-data' }})
         .then((res) => this.$emit('newProcessMined', this.file.name, res.data))
         .catch((err) => console.error(err))
     }

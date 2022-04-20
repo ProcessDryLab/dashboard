@@ -2,7 +2,7 @@
   <div>
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 mr-4 border-bottom ">
       <h1 class='h2'>Process {{ this.process.name }}</h1>
-      <b-button-group class="float-right">
+      <b-button-group v-if="this.process.type == 'dcr'" class="float-right">
         <b-button
           variant="outline-secondary"
           v-b-modal.new-constraint size="sm">
@@ -14,10 +14,10 @@
     </div>
     <b-container fluid>
       <b-row>
-        <b-col cols="10">
+        <b-col :cols="this.process.type == 'dcr' ? 10 : 12">
           <ProcessRenderer ref='dot' :dot='this.dot' />
         </b-col>
-        <b-col class="bg-light border-left border-bottom border-top pt-2">
+        <b-col  v-if="this.process.type == 'dcr'" class="bg-light border-left border-bottom border-top pt-2">
           <ProcessSimulator :json='this.process.json' />
         </b-col>
       </b-row>
@@ -40,7 +40,9 @@ export default {
       process: {
         id: '',
         name: '',
-        json: ''
+        json: '',
+        type: '',
+        dot: null
       },
       dot: null
     }
@@ -75,13 +77,18 @@ export default {
     },
     renderProcess () {
       this.dot = null
-      axios
-        .post(this.$backend.getUrlDcr2Dot(), this.process.json)
-        .then((res) => {
-          this.dot = res.data
-          this.$emit('processRereshed')
-        })
-        .catch((err) => console.error(err))
+      if (this.process.dot != null) {
+        this.dot = this.process.dot
+        this.$emit('processRereshed')
+      } else {
+        axios
+          .post(this.$backend.getUrlDcr2Dot(), this.process.json)
+          .then((res) => {
+            this.dot = res.data
+            this.$emit('processRereshed')
+          })
+          .catch((err) => console.error(err))
+      }
     },
     exportJson() {
       axios

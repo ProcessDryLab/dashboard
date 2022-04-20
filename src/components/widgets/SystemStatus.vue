@@ -5,7 +5,8 @@
       {{ this.getSystemStatus() }}<br />
       <small class="text-secondary">
         <font-awesome-icon icon="server" class="mr-1" v-bind:class="this.systemStatus" /> {{ this.$backend.getHostname() }} <br />
-        <font-awesome-icon icon="server" class="mr-1" v-bind:class="this.systemStatusMiner" /> {{ this.$backendMiner.getHostname() }}
+        <font-awesome-icon icon="server" class="mr-1" v-bind:class="this.systemStatusMiner" /> {{ this.$backendMiner.getHostname() }}<br />
+        <font-awesome-icon icon="server" class="mr-1" v-bind:class="this.systemStatusPalia" /> {{ this.$backendPalia.getHostname() }}
       </small>
     </p>
   </footer>
@@ -14,12 +15,18 @@
 <script>
 export default {
   name: 'SystemStatus',
-  props: ['systemStatus', 'systemStatusMiner'],
+  props: ['systemStatus', 'systemStatusMiner', 'systemStatusPalia'],
   computed: {
     systemStatusClass: function() {
-      if (this.systemStatus === 'online' && this.systemStatusMiner === 'online') {
+      if (
+        this.systemStatus === 'online' &&
+        this.systemStatusMiner === 'online' &&
+        this.systemStatusPalia === 'online') {
         return 'online'
-      } else if (this.systemStatus === 'booting' || this.systemStatusMiner === 'booting') {
+      } else if (
+        this.systemStatus === 'booting' ||
+        this.systemStatusMiner === 'booting' ||
+        this.systemStatusPalia === 'booting') {
         return 'booting'
       } else {
         return 'offline'
@@ -28,9 +35,15 @@ export default {
   },
   methods: {
     getSystemStatus () {
-      if (this.systemStatus === 'online' && this.systemStatusMiner === 'online') {
+      if (
+        this.systemStatus === 'online' &&
+        this.systemStatusMiner === 'online' &&
+        this.systemStatusPalia === 'online') {
         return 'System online'
-      } else if (this.systemStatus === 'booting' || this.systemStatusMiner === 'booting') {
+      } else if (
+        this.systemStatus === 'booting' ||
+        this.systemStatusMiner === 'booting' ||
+        this.systemStatusPalia === 'booting') {
         return 'Booting...'
       } else {
         return 'System offline'
