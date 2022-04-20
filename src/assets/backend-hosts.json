@@ -9,6 +9,6 @@
   },
   "palia":{
     "protocol": "https",
-    "hostname": "palia-miner-eu1-herokuapp.com"
+    "hostname": "palia-miner-eu1.herokuapp.com"
   }
 }
